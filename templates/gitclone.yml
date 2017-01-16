@@ -1,0 +1,8 @@
+version: '1'
+stages:
+  git-clone:
+    type: stackroute/git/clone
+    inputs:
+      REPOSITORY_URL: https://github.com/expressjs/express.git
+      BRANCH: master
+      FOO: "{{payload.foo}}"

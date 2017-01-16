@@ -1,0 +1,23 @@
+{
+  "name": "rishikesh",
+  "version": "0.1.0",
+  "description": "Distributed Pipeline Execution Service",
+  "main": "index.js",
+  "author": "Sagar Patke <sagarpatke@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "mocha **/*.spec.js"
+  },
+  "dependencies": {
+    "async": "^2.1.4",
+    "lodash": "^4.17.4",
+    "nid": "^0.3.2",
+    "nunjucks": "^3.0.0",
+    "redis": "^2.6.3",
+    "yamljs": "^0.2.8"
+  },
+  "devDependencies": {
+    "mocha": "^3.2.0",
+    "should": "^11.1.2"
+  }
+}

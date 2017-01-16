@@ -1,0 +1,86 @@
+version: '1'
+name: 'SIMPLE_PIPELINE_WITH_CODE_REVIEW'
+stages:
+  gitClone:
+    type: stackroute/git/clone
+    input:
+      REPOSITORY_URL: "{{payload.repo_url}}"
+      BRANCH: "{{payload.repo_ref}}"
+      WORKSPACE: "{{context.workspace}}" # Default
+    output:
+    context:
+    depends_on:
+  build:
+    type: stackroute/nodejs/build
+    input:
+      WORKSPACE: "{{context.workspace}}"
+    output:
+    context:
+    depends_on:
+      - gitClone
+  eslint:
+    type: stackroute/nodejs/eslint
+    input:
+      INCLUDE:
+        - "**/*.spec.js"
+      EXCLUDE:
+        - "**/node_modules/**/*.js"
+        - "**/bower_components/**/*.js"
+    output:
+      payload:
+        output:
+          lint:
+            js: "{{OUTPUT}}"
+    context:
+    depends_on:
+      - gitClone
+  htmlhint:
+    type: stackroute/nodejs/htmlhint
+    input:
+      INCLUDE: "{{payload.htmlhint.include}}"
+      EXCLUDE: "{{payload.htmlhint.exclude}}"
+    output:
+      payload:
+        output:
+          lint:
+            html: "{{OUTPUT}}"
+    context:
+    depends_on:
+      - gitClone
+  code-coverage:
+    type: stackroute/nodejs/code-coverage
+    input:
+      INCLUDE: "{{payload.codecoverage.include}}"
+      EXCLUDE: "{{payload.codecoverage.exclude}}"
+    output:
+      payload:
+        output:
+          codecoverage: "{{OUTPUT}}"
+    context:
+    depends_on:
+      - build
+  auto-testing:
+    type: stackroute/nodejs/mocha
+    input:
+      INCLUDE: "{{payload.unittest.include}}"
+      EXCLUDE: "{{payload.unittest.exclude}}"
+    output:
+      payload:
+        output:
+          unittest: "{{OUTPUT}}"
+    context:
+    depends_on: build
+  code-review:
+    type: stackroute/ext/code-review
+    input:
+    output:
+      payload:
+        output:
+          code-review: "{{OUTPUT}}"
+    context:
+    depends_on:
+      - eslint
+      - htmlhint
+      - code-coverage
+      - auto-testing
+      - code-review
