@@ -1,5 +1,4 @@
 version: '1'
-name: 'SIMPLE_PIPELINE_WITH_CODE_REVIEW'
 stages:
   gitClone:
     type: stackroute/git/clone
@@ -69,7 +68,8 @@ stages:
         output:
           unittest: "{{OUTPUT}}"
     context:
-    depends_on: build
+    depends_on:
+      - build
   code-review:
     type: stackroute/ext/code-review
     input:

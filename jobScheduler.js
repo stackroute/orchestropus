@@ -21,8 +21,9 @@ module.exports = function({jobId}, done) {
     // Filter Schedulable Stages
     const schedulableStageNames = notStartedStageNames.filter((stageName) => {
       const stage = stages[stageName];
-      if(!stage.dependencies) { stage.dependencies = []; }
-      const schedulable = stage.dependencies.every((dependencyName) => {
+      if(!stage.depends_on) { stage.depends_on = []; }
+      console.log('depends_on:', stage.depends_on);
+      const schedulable = stage.depends_on.every((dependencyName) => {
         const dependency = stages[dependencyName];
         return dependency.status === 'Complete';
       });
