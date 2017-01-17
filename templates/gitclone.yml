@@ -6,3 +6,4 @@ stages:
       REPOSITORY_URL: https://github.com/expressjs/express.git
       BRANCH: master
       FOO: "{{payload.foo}}"
+      WORKSPACE: "{{context.WORKSPACE}}"

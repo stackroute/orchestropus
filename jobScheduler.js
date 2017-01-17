@@ -33,8 +33,8 @@ module.exports = function({jobId}, done) {
     if(schedulableStageNames.length === 0) { done(); return; }
 
     // Schedule Stages
-    async.each(schedulableStageNames, (stageName) => {
-      client.lpush('scheduleStage', JSON.stringify({jobId, stageName}));
+    async.each(schedulableStageNames, (stageName, callback) => {
+      client.lpush('scheduleStage', JSON.stringify({jobId, stageName}), callback);
     }, done);
   });
 };
