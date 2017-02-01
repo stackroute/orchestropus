@@ -17,6 +17,14 @@ stages:
     context:
     depends_on:
       - gitClone
+  execute:
+    type: stackroute/nodejs/build
+    input:
+      WORKSPACE: "{{context.workspace}}"
+    output:
+    context:
+    depends_on:
+      - execute
   eslint:
     type: stackroute/nodejs/eslint
     input:
@@ -58,11 +66,11 @@ stages:
     context:
     depends_on:
       - build
-  auto-testing:
+  whitebox:
     type: stackroute/nodejs/mocha
     input:
-      INCLUDE: "{{payload.unittest.include}}"
-      EXCLUDE: "{{payload.unittest.exclude}}"
+      INCLUDE: "{{payload.whitebox.include}}"
+      EXCLUDE: "{{payload.whitebox.exclude}}"
     output:
       payload:
         output:
@@ -84,3 +92,4 @@ stages:
       - code-coverage
       - auto-testing
       - code-review
+      - execute

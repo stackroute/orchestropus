@@ -1,0 +1,6 @@
+#!/bin/sh
+
+echo executing mocha in $WORKSPACE
+
+cd $WORKSPACE
+mocha --reporter json

@@ -1,0 +1,16 @@
+version: '1'
+stages:
+  git-clone:
+    type: stackroute/git/clone
+    input:
+      REPOSITORY_URL: "{{payload.repoUrl}}"
+      BRANCH: master
+      WORKSPACE: "{{context.WORKSPACE}}"
+  build:
+    type: stackroute/javascript/build
+    depends_on:
+      - git-clone
+  test:
+    type: stackroute/javascript/mocha
+    depends_on:
+      - build

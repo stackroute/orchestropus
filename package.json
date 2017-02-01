@@ -6,14 +6,17 @@
   "author": "Sagar Patke <sagarpatke@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "mocha **/*.spec.js"
+    "start": "node index.js",
+    "test": "mocha workers/**/*.spec.js"
   },
   "dependencies": {
+    "amqplib": "^0.5.1",
     "async": "^2.1.4",
     "lodash": "^4.17.4",
+    "mock-require": "^2.0.1",
     "nid": "^0.3.2",
     "nunjucks": "^3.0.0",
-    "redis": "^2.6.3",
+    "redis": "^2.6.5",
     "yamljs": "^0.2.8"
   },
   "devDependencies": {

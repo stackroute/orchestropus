@@ -1,13 +1,10 @@
-const jobManager = require('./jobManager');
-const startJob = require('./startJob');
-const jobScheduler = require('./jobScheduler');
-const stageScheduler = require('./stageScheduler');
+const registerWorker = require('./registerWorker');
+const initializeJob = require('./workers/initializeJob');
+const jobScheduler = require('./workers/jobScheduler');
+const stageScheduler = require('./workers/stageScheduler');
+const resultsProcessor = require('./workers/resultsProcessor');
 
-jobManager.registerWorker('qM', startJob);
-jobManager.registerWorker('scheduleJob', jobScheduler);
-jobManager.registerWorker('scheduleStage', stageScheduler);
-
-// TODO: Handle CompleteJob
-// jobManager.registerWorker('completeJob', completeJob);
-
-// TODO: Handle Result
+registerWorker('qM', initializeJob);
+registerWorker('scheduleJob', jobScheduler);
+registerWorker('scheduleStage', stageScheduler);
+registerWorker('results', resultsProcessor);

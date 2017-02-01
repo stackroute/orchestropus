@@ -1,0 +1,9 @@
+version: '1'
+stages:
+  git-clone:
+    type: stackroute/git/clone
+    input:
+      REPOSITORY_URL: "{{payload.repoUrl}}"
+      BRANCH: master
+      FOO: "{{payload.foo}}"
+      WORKSPACE: "{{context.WORKSPACE}}"
