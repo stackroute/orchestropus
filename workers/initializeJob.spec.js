@@ -37,7 +37,7 @@ describe('InitializeJob', () => {
       if(err) { done(err); return; }
       const reply = JSON.parse(replyString);
       reply.should.have.property('WORKSPACE');
-      reply.WORKSPACE.should.be.exactly('file:///tmp/abc');
+      reply.WORKSPACE.should.be.exactly('/workspaces/abc');
       done();
     });
   });

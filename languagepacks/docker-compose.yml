@@ -1,0 +1,14 @@
+version: '2'
+services:
+  git:
+    image: languagepack-git:0.1.0
+    build: stackroute/git
+    network_mode: host
+    volumes:
+      - /tmp:/workspaces
+  javascript:
+    image: languagepack-javascript:0.1.0
+    build: stackroute/javascript
+    network_mode: host
+    volumes:
+      - /tmp:/workspaces
