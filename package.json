@@ -12,6 +12,8 @@
   "dependencies": {
     "amqplib": "^0.5.1",
     "async": "^2.1.4",
+    "body-parser": "^1.16.0",
+    "express": "^4.14.1",
     "lodash": "^4.17.4",
     "mock-require": "^2.0.1",
     "nid": "^0.3.2",

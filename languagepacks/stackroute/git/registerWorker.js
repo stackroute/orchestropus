@@ -9,11 +9,17 @@ module.exports = function(queue, worker) {
       channel.assertQueue(queue, {durable: true});
       channel.prefetch(1);
       channel.consume(queue, (msgBuffer) => {
-        const msg = JSON.parse(msgBuffer.content.toString());
-        worker(msg, (err) => {
-          if(err) { channel.nack(msgBuffer); return; }
+        try {
+          const msg = JSON.parse(msgBuffer.content.toString());
+          worker(msg, (err) => {
+            if(err) { channel.nack(msgBuffer); return; }
+            channel.ack(msgBuffer);
+          });
+        } catch(err) {
+          console.log('Discarding message:', msgBuffer.content.toString());
+          console.error('ERR:', err);
           channel.ack(msgBuffer);
-        });
+        }
       });
     }
   ]);
