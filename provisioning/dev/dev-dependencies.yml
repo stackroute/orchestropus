@@ -3,3 +3,35 @@
   become: true
   roles:
     - geerlingguy.docker
+  tasks:
+    - name: Install python-pip
+      package:
+        name: python-pip
+        state: latest
+    - name: Install docker-py and docker-compose
+      pip:
+        name: "{{item}}"
+        state: present
+      with_items:
+        - docker-py==1.9.0
+        - docker-compose==1.9.0
+    - name: Install redis
+      package:
+        name: redis-tools
+        state: latest
+    - name: Download and start redis and rabbitmq
+      docker_service:
+        project_name: orchestropus
+        definition:
+          version: "2"
+          services:
+            redis:
+              image: redis
+              ports:
+                - 6379:6379
+            rabbitmq:
+              image: rabbitmq:management
+              ports:
+                - 5672:5672
+                - 15672:15672
+
